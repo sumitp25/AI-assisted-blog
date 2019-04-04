@@ -1,0 +1,45 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Article list</title>
+		<link rel="stylesheet" href="{% static 'style.css' %}">
+	</head>
+	<body>
+		<div class="wrapper">
+			<h1><a href = "{% url 'home'%}">Blog</a></h1>
+			<nav>
+				<ul>
+					{% if user.is_authenticated %}
+					<li>
+						<form class="logout-link" action="{% url 'accounts:logout' %}" method="POST">
+							{% csrf_token %}
+							<button type="submit">Logout</button>
+						</form>
+					</li>
+					<li>
+						<a href="{% url 'articles:create' %}" class="highlight">New Article</a>
+					</li>
+					{% else %}
+					<li>
+						<a href="{% url 'accounts:login' %}">Login</a>
+						<a href="{% url 'accounts:signup' %}">Signup</a>
+					</li>
+					{% endif %}
+				</ul>
+			</nav>
+			{% block content %}
+			{% endblock %}
+			<p>
+			<iframe
+    			allow="microphone;"
+    			width="350"
+    			height="430"
+    			src="https://console.dialogflow.com/api-client/demo/embedded/b94e9c8b-c194-4516-bb69-1f076f7cee53">
+			</iframe>
+			</p>
+		</div>
+	</body>
+</html>
